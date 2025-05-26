@@ -1,0 +1,24 @@
+- name: Remove old Docker sources to avoid conflicts
+  file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
+
+- name: Remove old Docker keyring if exists
+  file:
+    path: /etc/apt/keyrings/docker.asc
+    state: absent
+
+- name: Download Docker install script
+  get_url:
+    url: https://get.docker.com
+    dest: /tmp/get-docker.sh
+    mode: '0755'
+
+- name: Run Docker install script (safe, universal method)
+  command: sh /tmp/get-docker.sh
+
+- name: Ensure Docker is started and enabled
+  service:
+    name: docker
+    state: started
+    enabled: true

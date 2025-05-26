@@ -1,0 +1,7 @@
+- name: Install Docker and run Prometheus container
+  hosts: all
+  become: true
+
+  roles:
+    - geerlingguy.docker
+    - prometheus
